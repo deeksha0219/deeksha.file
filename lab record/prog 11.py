@@ -1,10 +1,38 @@
 import pandas as pd
-df = pd.read_csv(r"3Salary_Data.csv")
+df = pd.read_csv('4laptops.csv')
 print(df)
 
-from sklearn.preprocessing import StandardScaler
 
-scaler = StandardScaler()
-scaled_data = scaler.fit_transform(df)
-scaled_df1 = pd.DataFrame(scaled_data, columns=df.columns)
-print(scaled_df1)
+pd.get_dummies(df)
+
+
+from sklearn.preprocessing import OneHotEncoder
+
+enc = OneHotEncoder()
+enc_data = enc.fit_transform(df[['Category']])
+print(enc_data)
+
+
+enc.categories_
+
+enc_data.toarray()
+
+
+enc_df = pd.DataFrame(enc_data.toarray())
+print(enc_df)
+
+enc_df = pd.DataFrame(enc_data.toarray(), columns = ['2 in 1 Convertible','Gaming','Netbook','Notebook','Ultrabook','Workstation'])
+print(enc_df)
+
+df1 = df.join(enc_df)
+print(df1)
+
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+
+
+df['RAM'] = le.fit_transform(df['RAM'])
+print(df)
+
+le.classes_
